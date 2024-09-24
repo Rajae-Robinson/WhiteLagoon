@@ -38,10 +38,22 @@ namespace WhiteLagoon.Web.Controllers
         public IActionResult Update(int Id) {
             Villa? villa = _db.Villas.FirstOrDefault(u => u.Id == Id);
             if (villa == null) {
-                return NotFound();
+                return RedirectToAction("Error", "Home");
             }
             return View(villa);
         }
+
+        [HttpPost]
+        public IActionResult Update(Villa obj)
+        {
+            if(ModelState.IsValid) {
+                _db.Villas.Update(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");            
+            }
+            return View();
+        }
+
 
     }
 }
