@@ -5,16 +5,11 @@ namespace WhiteLagoon.Infrastructure.Data
 {
     public class ApplicationDbContext : DbContext
     {
-        // public ApplicationDbContext() { }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
         public DbSet<Villa> Villas { get; set; }
 
-        // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        // {
-        //     optionsBuilder.UseSqlServer("Server=localhost;Database=WhiteLagoon;User Id=sa;Password=<BondSkyfall2012*>;TrustServerCertificate=True");
-        // }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             modelBuilder.Entity<Villa>().HasData(
