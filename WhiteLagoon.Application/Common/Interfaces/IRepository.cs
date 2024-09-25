@@ -9,5 +9,6 @@ namespace WhiteLagoon.Application.Common.Interfaces
         T Get(Expression<Func<T, bool>> filter, string? includeProperties = null);
         void Add(T entity);
         void Remove(T entity);
+        bool Any(Expression<Func<T,bool>> filter);
     }
 }
