@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using WhiteLagoon.Application.Common.Interface;
+using WhiteLagoon.Application.Common.Interfaces;
 using WhiteLagoon.Domain.Entities;
 using WhiteLagoon.Infrastructure.Data;
 
