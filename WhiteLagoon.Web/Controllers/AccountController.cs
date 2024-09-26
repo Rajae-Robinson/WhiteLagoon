@@ -38,8 +38,9 @@ namespace WhiteLagoon.Web.Controllers
             return View(loginVM);
         }
 
-        public IActionResult Register()
+        public IActionResult Register(string returnUrl=null)
         {
+            returnUrl ??= Url.Content("~/");
             if (!_roleManager.RoleExistsAsync(SD.Role_Admin).GetAwaiter().GetResult())
             {
                 _roleManager.CreateAsync(new IdentityRole(SD.Role_Admin)).Wait();
@@ -55,15 +56,23 @@ namespace WhiteLagoon.Web.Controllers
                 {
                     Text = x.Name,
                     Value = x.Name
-                })
+                }),
+                RedirectUrl = returnUrl 
             };
             return View(registerVM);
+        }
+
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Register(RegisterVM registerVM)
         {
-            ApplicationUser user = new()
+            if (ModelState.IsValid)
+            {
+                ApplicationUser user = new()
             {
                 Name = registerVM.Name,
                 Email = registerVM.Email,
@@ -96,11 +105,12 @@ namespace WhiteLagoon.Web.Controllers
                 {
                     return LocalRedirect(registerVM.RedirectUrl);
                 }
-            }
+                }
 
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error.Description);
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
             }
 
             registerVM.RoleList = _roleManager.Roles.Select(x => new SelectListItem
