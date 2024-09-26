@@ -1,4 +1,6 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.AspNetCore.Mvc.Rendering;
 namespace WhiteLagoon.Web.ViewModels
 {
     public class RegisterVM
@@ -17,6 +19,9 @@ namespace WhiteLagoon.Web.ViewModels
         public required string Name { get; set; }
         [Display(Name="Phone Number")]
         public string? PhoneNumber { get; set; }
+        public string? Role { get; set; }
+        [ValidateNever]
+        public IEnumerable<SelectListItem>? RoleList { get; set; }
         public string? RedirectUrl { get; set; }
     }
 }
